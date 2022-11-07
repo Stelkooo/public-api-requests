@@ -26,7 +26,7 @@ function displayEmployees(employeesData) {
     employees = employeesData;
     let galleryHTML = ``;
     employees.forEach((employee, index) => {
-        galleryHTML += `<div class="card" data-index=${index}>
+        galleryHTML += `<div class="card" data-index="${index}" data-first="${employee.name.first.toLowerCase()}" data-last="${employee.name.last.toLowerCase()}">
             <div class="card-img-container">
                 <img class="card-img" src="${employee.picture.large}" alt="profile picture">
             </div>
@@ -93,3 +93,21 @@ function displayModal(index) {
         modalContainer.style.display = 'none';
     });
 }
+/**
+ * search function
+ * allows users to filter out specific employees
+ * by typing the search input box and click on the the submit button
+ */
+document.getElementById('search-submit').addEventListener('click', () => {
+    let searchInput = document.getElementById('search-input').value;
+    const cards = document.getElementsByClassName('card');
+    for (const card of cards) {
+        const firstName = card.getAttribute('data-first');
+        const lastName = card.getAttribute('data-last');
+        if (firstName.includes(searchInput) || lastName.includes(searchInput)) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
+    }
+});
