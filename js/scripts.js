@@ -1,12 +1,27 @@
 const apiUrl = 'https://randomuser.me/api/?results=12&inc=picture,name,email,location,cell,dob&nat=us';
 const gallery = document.getElementById('gallery');
 let employees = [];
-
+/**
+ * fetches 12 random users from the randomuser api with the following info:
+ * - picture
+ * - name
+ * - email
+ * - location
+ * - cell
+ * - dob
+ * once it gets the result, it calls the displayEmployees func
+ */
 fetch(apiUrl)
     .then((response) => response.json())
     .then((data) => data.results)
     .then(displayEmployees);
-
+/**
+ * displays the random employees on the screen
+ * @param {array} employeesData 
+ * once the api fetches 12 random users
+ * it displays them on the screen in a grid fashion
+ * a card is created for each employee
+ */
 function displayEmployees(employeesData) {
     employees = employeesData;
     let galleryHTML = ``;
@@ -24,13 +39,21 @@ function displayEmployees(employeesData) {
     });
     gallery.insertAdjacentHTML('beforeend', galleryHTML);
 }
-
+/**
+ * if one of the cards gets clicked
+ * it calls the displayModal func if its index
+ */
 gallery.addEventListener('click', (e) => {
     const card = e.target.closest('.card');
     const cardIndex = card.getAttribute('data-index');
     displayModal(cardIndex);
 });
-
+/**
+ * displays a modal window on screen when a card is pressed
+ * @param {number} index 
+ * the modal window displays more info about the user than the card
+ * can be closed by clicking on the X
+ */
 function displayModal(index) {
     const {name: {first, last}, dob: {date}, cell, email, location: {city, street, state, postcode}, picture} = employees[index];
     let birthday = new Date(date);
