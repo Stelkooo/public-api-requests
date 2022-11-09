@@ -83,7 +83,6 @@ function createModal() {
 function changeModal(index) {
     const {name: {first, last}, dob: {date}, cell, email, location: {city, street, state, postcode}, picture} = employees[index];
     let birthday = new Date(date);
-    console.log(birthday);
     modalContainer.setAttribute('data-index', index);
     birthday = `${birthday.getMonth() + 1}/${birthday.getDate()}/${birthday.getFullYear()}`;
     document.getElementById('img').src = picture.large;
@@ -140,16 +139,19 @@ modalNext.addEventListener('click', () => {
  * allows users to filter out specific employees
  * by typing the search input box and click on the the submit button
  */
-document.getElementById('search-submit').addEventListener('click', () => {
-    let searchInput = document.getElementById('search-input').value;
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('input', updateCards);
+document.getElementById('search-submit').addEventListener('click', updateCards);
+function updateCards() {
     const cards = document.getElementsByClassName('card');
+    let searchInputValue = searchInput.value;
     for (const card of cards) {
         const firstName = card.getAttribute('data-first');
         const lastName = card.getAttribute('data-last');
-        if (firstName.includes(searchInput) || lastName.includes(searchInput)) {
+        if (firstName.includes(searchInputValue) || lastName.includes(searchInputValue)) {
             card.style.display = 'flex';
         } else {
             card.style.display = 'none';
         }
     }
-});
+}
