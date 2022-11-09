@@ -83,8 +83,9 @@ function createModal() {
 function changeModal(index) {
     const {name: {first, last}, dob: {date}, cell, email, location: {city, street, state, postcode}, picture} = employees[index];
     let birthday = new Date(date);
+    console.log(birthday);
     modalContainer.setAttribute('data-index', index);
-    birthday = `${birthday.getMonth()}/${birthday.getDay()}/${birthday.getFullYear()}`;
+    birthday = `${birthday.getMonth() + 1}/${birthday.getDate()}/${birthday.getFullYear()}`;
     document.getElementById('img').src = picture.large;
     document.getElementById('name').innerHTML = `${first} ${last}`;
     document.getElementById('email').innerHTML = email;
